@@ -7,68 +7,52 @@
 
 #include <iostream>
 #include <vector>
-#include <unordered_map>
 
 class Jucator {
+
     std::string nume;
-    int baniCard;
-    //std::unordered_map<std::string, int> umap;
-    std::vector<std::string> proprietati;
-    ///Proprietate p;
+    int bani_card;
+    int id;
 public:
-
     Jucator();
+    std::string get_nume();
+    int get_bani_card();
+    int get_id();
 
-    const std::string &getNume() const;
+    void set_nume(std::string);
+    void set_bani_card(int);
+    void set_id(int);
 
-    void setNume(const std::string &nume);
+    Jucator(std::string, int, int);
+    ~Jucator();
 
-    int getBaniCard() const;
-
-    void setBaniCard(int baniCard);
-
-//    std::unordered_map<std::string, int> listaProprietati(std::string proprietati) {
-//        umap[proprietati] = count ++;
-//        return umap;
-//    }
-
-    void listaProprietati(std::string &proprietate) {
-        proprietati.push_back(proprietate);
-    }
-
-    std::vector<std::string> listaProprietati() {
-        return proprietati;
-    }
-
-    Jucator(const std::string &nume, int baniCard, const char *proprietati);
-
-    virtual ~Jucator();
 };
-Jucator ::Jucator() {
-    baniCard = 0;
-}
-const std::string &Jucator::getNume() const {
+
+std::string Jucator::get_nume() {
     return nume;
 }
-
-void Jucator::setNume(const std::string &nume) {
-    Jucator::nume = nume;
+int Jucator::get_bani_card() {
+    return bani_card;
+}
+int Jucator::get_id() {
+    return id;
+}
+void Jucator::set_nume(std::string nume) {
+    this->nume = nume;
+}
+void Jucator::set_bani_card(int bani_card) {
+    this->bani_card = bani_card;
+}
+void Jucator::set_id(int id) {
+    this->id = id;
+}
+Jucator::Jucator(std::string nume, int bani_card, int id) {
+    this->nume = nume;
+    this->bani_card = bani_card;
+    this->id = id;
 }
 
-int Jucator::getBaniCard() const {
-    return baniCard;
+Jucator::~Jucator() {
+    std::cout << "Jucatorul " << nume << "a abandonat jocul.";
 }
-
-void Jucator::setBaniCard(int baniCard) {
-    Jucator::baniCard = baniCard;
-}
-
-Jucator::Jucator(const std::string &nume, int baniCard, const char *proprietati) : nume(nume),
-                                                                                   baniCard(baniCard),
-                                                                                   proprietati((unsigned int) proprietati) {
-    std::cout << "Am fost creat!!";
-}
-
-Jucator::~Jucator() = default;
-
 #endif //TEMA_JUCATOR_H

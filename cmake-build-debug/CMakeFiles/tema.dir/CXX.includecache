@@ -11,11 +11,13 @@ iostream
 -
 vector
 -
-unordered_map
--
 
 C:/Users/jchiv/OneDrive/Desktop/ANUL 2/SEM1/POO/Laborator-Marius/tema/main.cpp
 iostream
+-
+vector
+-
+fstream
 -
 jucator.h
 C:/Users/jchiv/OneDrive/Desktop/ANUL 2/SEM1/POO/Laborator-Marius/tema/jucator.h
