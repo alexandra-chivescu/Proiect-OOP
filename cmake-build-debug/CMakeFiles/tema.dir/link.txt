@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2020.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\tema.dir/objects.a
-C:\MinGW\bin\ar.exe cr CMakeFiles\tema.dir/objects.a @CMakeFiles\tema.dir\objects1.rsp
-C:\MinGW\bin\g++.exe -Wall -Wextra -pedantic -Weffc++ -g   -Wl,--whole-archive CMakeFiles\tema.dir/objects.a -Wl,--no-whole-archive  -o tema.exe -Wl,--out-implib,libtema.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\tema.dir\linklibs.rsp
