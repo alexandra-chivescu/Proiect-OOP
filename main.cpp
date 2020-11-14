@@ -6,8 +6,8 @@
 #include "headers/proprietate.h"
 
 int main() {
-    std::ifstream juc("fisiere/jucatori.txt");
-    std::ifstream pr("fisiere/proprietate.txt");
+    std::ifstream juc("../fisiere/jucatori.txt");
+    std::ifstream pr("../fisiere/proprietate.txt");
     int n;
     juc >> n;
     std::cout<<"--------------START GAME--------------"<<std::endl;
