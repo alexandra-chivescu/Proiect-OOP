@@ -15,7 +15,7 @@ int main() {
     std::cout<<"--------------Jucatori--------------"<<std::endl;
     std::cout << "Numarul de jucatori este: " << n << "\n";
 
-    std::vector<Jucator> jucator;
+    std::vector<Jucator> jucatori;
     std::string nume;
     int bani_card;
 
@@ -23,16 +23,16 @@ int main() {
         juc >> nume;
         juc >> bani_card;
         Jucator jucator_nou(nume, bani_card, i+1);
-        jucator.push_back(jucator_nou);
+        jucatori.push_back(jucator_nou);
     }
 
     for (int i = 0; i < n; ++i) {
-       afisare_jucatori(jucator[i].get_nume(), jucator[i].get_bani_card(), jucator[i].get_id());
+       afisare_jucatori(jucatori[i].get_nume(), jucatori[i].get_bani_card(), jucatori[i].get_id());
     }
 
     int nr_proprietati;
     pr>>nr_proprietati;
-    std::vector<Proprietate> proprietate;
+    std::vector<Proprietate> proprietati;
     std::string culoare, nume_proprietate;
     int pret_chirie, pret_vanzare;
 
@@ -42,11 +42,11 @@ int main() {
         pr>>pret_chirie;
         pr>>pret_vanzare;
         Proprietate proprietate_noua(nume_proprietate, culoare, pret_chirie, pret_vanzare);
-        proprietate.push_back(proprietate_noua);
+        proprietati.push_back(proprietate_noua);
     }
     std::cout<<"--------------Proprietati Monopoly--------------"<<std::endl;
     for (int i = 0; i < nr_proprietati; ++i) {
-        afisare_proprietati(proprietate[i].get_nume(), proprietate[i].get_culoare(), proprietate[i].get_stadiu(), proprietate[i].get_pret_chirie(), proprietate[i].get_pret_vanzare(), proprietate[i].get_id());
+        afisare_proprietati(proprietati[i].get_nume(), proprietati[i].get_culoare(), proprietati[i].get_stadiu(), proprietati[i].get_pret_chirie(), proprietati[i].get_pret_vanzare(), proprietati[i].get_id());
     }
 
     juc.close();
