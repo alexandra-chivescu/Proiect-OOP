@@ -14,5 +14,7 @@ public:
 
     void primeste_bani(int suma);
     void da_bani(int suma);
+
+    friend class Joc;
 };
 #endif //TEMA_BANCA_H

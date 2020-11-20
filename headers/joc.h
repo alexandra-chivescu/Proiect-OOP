@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <vector>
+#include "bani_actiune.h"
+#include "banca.h"
 
 class Joc {
     std::vector<Jucator> jucatori;

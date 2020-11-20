@@ -3,17 +3,9 @@
 //
 #include<iostream>
 #include "../headers/proprietate.h"
-Proprietate::Proprietate(int curr_id) {
-    stadiu = 'v';
-    id = curr_id;
-}
-Proprietate::Proprietate(std::string nume, std::string culoare, int pret_chirie, int pret_vanzare) {
+Proprietate::Proprietate() {
     stadiu = 'v';
     id = 0;
-    this->nume = nume;
-    this->culoare = culoare;
-    this->pret_chirie = pret_chirie;
-    this->pret_vanzare = pret_vanzare;
 }
 
 std::string Proprietate::get_nume() {
@@ -57,9 +49,6 @@ void Proprietate::set_id(int id) {
 bool Proprietate::operator==(Proprietate & alta_proprietate) {
     return this->get_id() == alta_proprietate.get_id();
 }
-Proprietate::~Proprietate() {
-    //std::cout <<"S-a terminat jocul. Speram sa avem mai multe proprietati in realitate :). "<< std::endl;
-}
 
 std::istream& operator>>(std::istream& in, Proprietate& proprietate) {
     in>>proprietate.nume;
@@ -72,4 +61,8 @@ std::istream& operator>>(std::istream& in, Proprietate& proprietate) {
 std::ostream &operator<<(std::ostream &os, const Proprietate &proprietate) {
             os<<"Proprietatea " << proprietate.nume <<" cu id-ul "<< proprietate.id<< " se afla in zona " << proprietate.culoare << " , stadiu de vanzare, la pretul de " << proprietate.pret_vanzare << "$ si apartine bancii." << std::endl;
     return os;
+}
+
+Proprietate::~Proprietate() {
+    //std::cout <<"S-a terminat jocul. Speram sa avem mai multe proprietati in realitate :). "<< std::endl;
 }

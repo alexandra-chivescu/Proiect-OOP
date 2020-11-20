@@ -24,25 +24,28 @@ void Joc::start() {
         jucatori.push_back(jucator_nou);
     }
 
-    for (int i = 0; i < n; ++i) {
-        std::cout << jucatori[i];
-    }
+//    for (int i = 0; i < n; ++i) {
+//        std::cout << jucatori[i];
+//    }
 
     int nr_proprietati;
     pr >> nr_proprietati;
 
     for (int i = 0; i < nr_proprietati; ++i) {
-        Proprietate proprietate_noua(i + 1);
+        Proprietate proprietate_noua;
         pr >> proprietate_noua;
         proprietati.push_back(proprietate_noua);
     }
-    std::cout << "--------------Proprietati Monopoly--------------" << std::endl;
-    for (int i = 0; i < nr_proprietati; i++) {
-        std::cout << proprietati[i];
-    }
-    int nr_runde = 5;
+//    std::cout << "--------------Proprietati Monopoly--------------" << std::endl;
+//    for (int i = 0; i < nr_proprietati; i++) {
+//        std::cout << proprietati[i];
+//    }
+
+    int nr_runde = 3;
 // momentan punem nr. de runde ca să se oprească jocul
     Zar zar;
+    Bani_actiune bani_actiune;
+    Banca banca;
     while (nr_runde-- ) {
         for (auto &jucator : jucatori) {
 // rândul fiecărui jucător; jucătorul are asociată o poziție pe tabla de joc în intervalul [0, proprietati.size())
@@ -51,25 +54,53 @@ void Joc::start() {
                 jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare - proprietati.size()); //pentru ca jucatorul poate face mai multe ture de tabla
             else
                 jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare);
-            //std::cout<<"Jucatorul : "<<jucator.get_id() << " -> " << jucator.get_pozitie()<< std::endl;
-            if(proprietati[jucator.get_pozitie()].get_stadiu() == 'v' && proprietati[jucator.get_pozitie()].get_id() == 0) //proprietatea apartine bancii
+            std::cout<<"Jucatorul : "<<jucator.get_nume() << " a avansat la pozitia: " << jucator.get_pozitie()<< std::endl;
+            ///Proprietatea apartine bancii
+            int id_proprietate =  proprietati[jucator.get_pozitie()].get_id();
+            if(id_proprietate == 0)
             {
                 std::cout<<"Proprietatea apartine bancii." <<std::endl;
-                std::cout<<"Apasa 1-cumperi sau 0-continui jocul";
-                int choice;
+                std::cout<<"Vrei sa o cumperi? da/nu ";
+                std::string choice;
                 std::cin>>choice;
-                if(choice == 1) {
-                    proprietati[jucator.get_pozitie()].set_stadiu('c');
+                bani_actiune.cumpara_de_la_banca(jucator, banca, proprietati[jucator.get_pozitie()], choice);
+            } else { ///Proprietatea apartine unui chirias
+                int i;
+                for ( i = 0; i < n; ++i) {
+                    if(jucatori[i].get_id() == proprietati[jucator.get_pozitie()].get_id()) {
+                        break;
+                    }
                 }
+                std::cout<<"Proprietatea apartine lui: "<< jucatori[i].get_nume()<< ". Aici se va percepe o chirie." << std::endl;
+                    bani_actiune.inchiriaza_de_la_jucator(jucator, jucatori[i], proprietati[jucator.get_pozitie()]);
             }
-                std::cout << "Jucatorul"<< jucator.get_nume() << "introdu 1-pt a cumpara sau 0-pt a plati chiria si a continua jocul";
 
-// se verifică dacă proprietatea aparține băncii sau unui jucător
-// dacă aparține băncii, o cumpără sau o scoate la licitație (parcă așa era)
-// altfel, trebuie să plătească chirie
-// ulterior, vom adăuga și acele căsuțe cu cards/free pass/jail/start ca subclase de proprietate
+
         }
    }
+
+    ///Verific cine a castigat
+    int max = 0;
+    for(int i = 0 ; i < n; i++)
+    {
+        if( jucatori[i].get_bani_card() > max)
+            max = jucatori[i].get_bani_card();
+    }
+    std::cout<<"Situatia finala a proprietatilor de pe tabla: "<<std::endl;
+    for(int i = 0 ; i < nr_proprietati; i++)
+    {
+        if(proprietati[i].get_stadiu() == 'v')
+            std::cout << proprietati[i].get_nume() << ": stadiu- vanzare & id- " << proprietati[i].get_id() << std::endl;
+        else
+            std::cout << proprietati[i].get_nume() << ": stadiu- inchiriat & id- " << proprietati[i].get_id() << std::endl;
+    }
+    for(int i = 0 ; i < n; i++)
+    {
+        if( jucatori[i].get_bani_card() == max)
+            std::cout<<"Cei mai multi bani pe card ii are: "<< jucatori[i].get_nume() <<": "<< jucatori[i].get_bani_card() <<"$."<< std::endl;
+    }
+    std::cout << "Banca este adevaratul castigator cu: "<<banca.suma_bani << "$ in cont.";
+        // ulterior, vom adăuga și acele căsuțe cu cards/free pass/jail/start ca subclase de proprietate
     juc.close();
     pr.close();
     return;

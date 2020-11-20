@@ -14,11 +14,7 @@ class Proprietate {
     int pret_chirie, pret_vanzare, id; ///id = 0 inseama ca apartine bancii
 
 public:
-    Proprietate(int);
-
-    Proprietate(std::string, std::string, int, int);
-
-    void dateProprietate();
+    Proprietate();
 
     std::string get_nume();
     std::string get_culoare();

@@ -7,13 +7,11 @@
 #include <iostream>
 #include "jucator.h"
 #include "banca.h"
+#include "proprietate.h"
 class Bani_actiune {
 public:
-    void cumpara_de_la_jucator(Jucator cumparator, Jucator proprietar, int suma);
-    void inchiriaza_de_la_jucator(Jucator chirias, Jucator proprietar, int suma);
-    void cumpara_de_la_banca(Jucator cumparator, Banca banca, int suma);
-    void inchiriaza_de_la_banca(Jucator chirias, Banca banca, int suma);
-
+    void inchiriaza_de_la_jucator(Jucator& chirias, Jucator& proprietar,Proprietate& proprietate);
+    void cumpara_de_la_banca(Jucator& cumparator, Banca& banca,Proprietate& proprietate, std::string choice);
 };
 
 #endif //TEMA_BANI_ACTIUNE_H
