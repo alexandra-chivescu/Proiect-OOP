@@ -13,3 +13,7 @@ void Banca::primeste_bani(int suma) {
 void Banca::da_bani(int suma) {
     suma_bani -= suma;
 }
+
+Banca::~Banca() {
+
+}

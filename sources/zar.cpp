@@ -16,3 +16,7 @@ int Zar::da_cu_zarul(){
 
     return nr_poz;
 }
+
+Zar::~Zar() {
+
+}

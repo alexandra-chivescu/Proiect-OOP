@@ -9,5 +9,6 @@ public:
     Zar();
     int da_cu_zarul();
 
+    ~Zar();
 };
 #endif //TEMA_DICE_H

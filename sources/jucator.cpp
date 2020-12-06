@@ -30,7 +30,7 @@ void Jucator::set_bani_card(int bani_card) {
 void Jucator::set_id(int id) {
     this->id = id;
 }
-void Jucator::set_pozitie(int pozitie) {
+void Jucator:: set_pozitie(int pozitie) {
     this->pozitie = pozitie;
 }
 
@@ -44,6 +44,7 @@ std::ostream& operator<<(std::ostream& out, Jucator& jucator) {
     out << "Jucatorul " << jucator.nume << " cu id-ul " << jucator.id << " are pe card suma de " << jucator.bani_card<< " $"<<"\n";
     return out;
 }
+
 
 void Jucator::da_bani(int suma) {
     this->bani_card -= suma;

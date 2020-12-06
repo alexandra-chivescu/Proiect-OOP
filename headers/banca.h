@@ -16,5 +16,7 @@ public:
     void da_bani(int suma);
 
     friend class Joc;
+
+    ~Banca();
 };
 #endif //TEMA_BANCA_H

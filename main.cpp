@@ -2,7 +2,7 @@
 #include <vector>
 #include <fstream>
 #include "headers/jucator.h"
-#include "headers/proprietate.h"
+#include "headers/spatiu_proprietate.h"
 #include "headers/joc.h"
 
 int main() {
