@@ -1,11 +1,8 @@
 Proiect POO
 
 Am adaugat:
--clasa proprietati, am citit proprietatile pt joc din fisier 
--supraincarcare operatori << si >> in clasa Jucator
--supraincarcare operator == in clasa Proprietate
+-clasele banca, bani_actiune, joc, zar
+-partea de afisare de final cu aflarea maximului o sa o schimb complet, am pus-o ca sa vad ca functioneaza
 
 Urmeaza:
--sa adaug o clasa Actiune pt jucator unde sa aleaga daca vrea sa cumpere/sa vanda/sa inchirieze vreo proprietate - o sa ma folosesc de id pt asta
--posibil sa sterg clasa Banca(nu sunt sigura inca)
--mosteniri pt t2
+-tema2(mosteniri + altele) 
