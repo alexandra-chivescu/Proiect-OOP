@@ -55,7 +55,7 @@ void Alta_carte::get_card_noroc(Alta_carte &alta_carte) {
             alta_carte.set_pret(15);
             break;
         case 1:
-            std::cout << "BANK PAYS YOU DIIVIDENT OF $50"<<std::endl;
+            std::cout << "BANK PAYS YOU DIVIDENT OF $50"<<std::endl;
             alta_carte.setPrimescSauPlatesc("primesc");
             alta_carte.set_pret(50);
         case 2:

@@ -7,19 +7,21 @@
 #include "../headers/spatiu_proprietate.h"
 #include "../headers/joc.h"
 #include "../headers/zar.h"
+#include "../headers/rlutil.h"
 
 void Joc::start() {
     std::ifstream juc("../fisiere/jucatori.txt");
     std::ifstream pr("../fisiere/proprietate.txt");
     std::ifstream alt("../fisiere/alte_carti.txt");
-    int n;
-    juc >> n;
+    int nr_jucatori;
+    juc >> nr_jucatori;
+    rlutil::setColor(3);
     std::cout << "--------------START GAME--------------" << std::endl;
     std::cout << "--------------Detalii joc--------------" << std::endl;
     std::cout << "--------------Jucatori--------------" << std::endl;
-    std::cout << "Numarul de jucatori este: " << n << "\n";
+    std::cout << "Numarul de jucatori este: " << nr_jucatori << "\n";
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < nr_jucatori; ++i) {
         Jucator jucator_nou(i + 1);
         juc >> jucator_nou;
         jucatori.push_back(jucator_nou);
@@ -63,7 +65,6 @@ void Joc::start() {
                 jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare - 40); //pentru ca jucatorul poate face mai multe ture de tabla
             else
                 jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare);
-            system("Color 05");
             std::cout<<"Jucatorul : "<<jucator.get_nume() << " a avansat la pozitia: " << jucator.get_pozitie()<< std::endl;
 
             //Aflu pe pozitia respectiva ce am proprietate sau altceva
@@ -81,7 +82,6 @@ void Joc::start() {
                 ///Proprietatea apartine bancii
                 int id_proprietate = proprietati[nr_proprietate].get_id();
                 if (id_proprietate == 0) {
-                    system("Color 02");
                     std::cout << "Proprietatea apartine bancii." << std::endl;
                     std::cout << "Vrei sa o cumperi? da/nu ";
                     std::string choice;
@@ -89,17 +89,15 @@ void Joc::start() {
                     bani_actiune.cumpara_de_la_banca(jucator, banca, proprietati[jucator.get_pozitie()], choice);
                 } else { ///Proprietatea apartine unui jucator
                     int i;
-                    for (i = 0; i < n; ++i) {
+                    for (i = 0; i < nr_jucatori; ++i) {
                         if (jucatori[i].get_id() == id_proprietate) {
                             break;
                         }
                     }
-                    system("Color 04");
                     std::cout << "Proprietatea apartine lui: " << jucatori[i].get_nume()
                               << ". Aici se va percepe o chirie de "
                               << proprietati[jucator.get_pozitie()].get_pret_chirie() << "$. " << std::endl;
                     bani_actiune.inchiriaza_de_la_jucator(jucator, jucatori[i], proprietati[jucator.get_pozitie()]);
-                    system("Color 04");
                 }
             } else {
                 int nr_carte = 0;
@@ -122,34 +120,67 @@ void Joc::start() {
                 else if(carti[nr_carte].get_nume() == "inchisoare")
                     std::cout<< "PRISON" << std::endl;
 
-                ///Aici verific daca jucatorul trebuie sa primeasca sau sa plateasca
+                ///Aici verific daca jucatorul trebuie sa primeasca sau sa plateasca bani
                 bani_actiune.alte_carduri_interact(jucator, banca, carti[nr_carte], carti[nr_carte].getPrimescSauPlatesc());
+                rlutil::setColor(3);
             }
         }
    }
+
+///    std::cout<<"Situatia finala a proprietatilor de pe tabla: "<<std::endl;
+//    for(int i = 0 ; i < nr_proprietati; i++)
+//    {
+//        if(proprietati[i].get_stadiu() == 'v')
+//            std::cout << proprietati[i].get_nume() << ": stadiu- vanzare & id- " << proprietati[i].get_id() << std::endl;
+//        else
+//            std::cout << proprietati[i].get_nume() << ": stadiu- inchiriat & id- " << proprietati[i].get_id() << std::endl;
+//    }
+
     ///Verific cine a castigat
+
+    int avere_jucator[nr_jucatori];
+    for (int i = 0; i < nr_jucatori; ++i) {
+        avere_jucator[i] = 0;
+    }
+    for (int i = 0; i < nr_proprietati; ++i) {
+        for (int j = 0; j < nr_jucatori; ++j) {
+            if(proprietati[i].get_id() == jucatori[j].get_id()) {
+                avere_jucator[j] = avere_jucator[j] + proprietati[i].get_pret();
+                break;
+            }
+        }
+    }
     int max = 0;
-    for(int i = 0 ; i < n; i++)
+    for(int i = 0 ; i < nr_jucatori; i++)
     {
-        if( jucatori[i].get_bani_card() > max)
-            max = jucatori[i].get_bani_card();
+        if( jucatori[i].get_bani_card() + avere_jucator[i] > max)
+            max = jucatori[i].get_bani_card() + avere_jucator[i];
     }
-    std::cout<<"Situatia finala a proprietatilor de pe tabla: "<<std::endl;
-    system("Color 01");
-    for(int i = 0 ; i < nr_proprietati; i++)
+    int count_winners = 1;
+    for(int i = 0 ; i < nr_jucatori; i++)
     {
-        if(proprietati[i].get_stadiu() == 'v')
-            std::cout << proprietati[i].get_nume() << ": stadiu- vanzare & id- " << proprietati[i].get_id() << std::endl;
+        if( jucatori[i].get_bani_card() + avere_jucator[i] == max) {
+            count_winners ++;
+        }
+    }
+    rlutil::setColor(13);
+    int first_time = 1;
+    for (int i = 0; i < nr_jucatori; ++i) {
+        if( jucatori[i].get_bani_card() + avere_jucator[i] == max && count_winners == 1) {
+            std::cout << "Castigatorul este: " << jucatori[i].get_nume() << " cu o avere de "
+                      << jucatori[i].get_bani_card() + avere_jucator[i] << " $." << std::endl;
+        }
         else
-            std::cout << proprietati[i].get_nume() << ": stadiu- inchiriat & id- " << proprietati[i].get_id() << std::endl;
+        {
+            if(first_time == 1) {
+                std::cout << "Castigatorii cu suma de " << jucatori[i].get_bani_card() + avere_jucator[i] << " $ sunt: "
+                          << std::endl;
+            }
+            std::cout << jucatori[i].get_nume() <<std::endl;
+            first_time = 0;
+        }
     }
-    for(int i = 0 ; i < n; i++)
-    {
-        if( jucatori[i].get_bani_card() == max)
-            std::cout<<"Cei mai multi bani pe card ii are: "<< jucatori[i].get_nume() <<": "<< jucatori[i].get_bani_card() <<"$."<< std::endl;
-    }
-    std::cout << "Banca este adevaratul castigator cu: "<<banca.suma_bani << "$ in cont.";
-        // ulterior, vom adăuga și acele căsuțe cu cards/free pass/jail/start ca subclase de proprietate
+    std::cout << "Banca este adevaratul castigator cu: "<< banca.suma_bani << "$ in cont.";
     juc.close();
     pr.close();
 }

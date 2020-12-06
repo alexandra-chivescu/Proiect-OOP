@@ -8,5 +8,6 @@
 int main() {
     Joc joc_nou;
     joc_nou.start();
+
     return 0;
 }
