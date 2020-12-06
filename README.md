@@ -1,8 +1,6 @@
 Proiect POO
 
-Am adaugat:
--clasele banca, bani_actiune, joc, zar
--partea de afisare de final cu aflarea maximului o sa o schimb complet, am pus-o ca sa vad ca functioneaza
-
-Urmeaza:
--tema2(mosteniri + altele) 
+-am adaugat op= la clasa Jucator 
+-am continuat jocul cu alte tipuri de spatii - comunitate, noroc, gara, inchisoare
+-mostenire de la spatiu_joc la proprietate si alta_carte
+-urmeaza exceptii + unique_ptr
