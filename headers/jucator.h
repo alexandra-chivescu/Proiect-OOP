@@ -28,6 +28,8 @@ public:
 
     friend std::istream& operator>>(std::istream&, Jucator&);
     friend std::ostream& operator<<(std::ostream&, Jucator&);
+
+    ///op=
     Jucator& operator=(Jucator& alt_jucator){
         if(this == &alt_jucator)
             return *this;
@@ -39,6 +41,14 @@ public:
             pozitie = alt_jucator.pozitie;
         }
     };
+
+    ///Copy constructor
+    Jucator(const Jucator &juc) {
+        nume = juc.nume;
+        bani_card = juc.bani_card;
+        id = juc.id;
+        pozitie = juc.pozitie;
+    }
 
     void da_bani(int suma);
     void primeste_bani(int suma);

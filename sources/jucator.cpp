@@ -45,7 +45,6 @@ std::ostream& operator<<(std::ostream& out, Jucator& jucator) {
     return out;
 }
 
-
 void Jucator::da_bani(int suma) {
     this->bani_card -= suma;
 }
