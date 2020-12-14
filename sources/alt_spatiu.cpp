@@ -15,107 +15,107 @@ std::ostream &operator<<(std::ostream &os, const Alta_carte& alta_carte) {
     return os;
 }
 
-void Alta_carte::get_card_comunitate(Alta_carte &alta_carte) {
+void Alta_carte::aleg_card_comunitate() {
     switch(rand()% 5) {
         case 0:
-            std::cout << "FROM SALE OF STOCK YOU GET $45"<<std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(45);
+            std::cout << "PRIMESTI $45 DE LA STAT CA AI MATURAT SOSEAUA"<<std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(45);
             break;
         case 1:
-            std::cout << "DOCTOR'S FEE PAY $50"<<std::endl;
-            alta_carte.setPrimescSauPlatesc("platesc");
-            alta_carte.set_pret(50);
+            std::cout << "IN URMA SEDINTEI DE LA WORLD CLASS AI DE PLATIT $50"<<std::endl;
+            this->setPrimescSauPlatesc("platesc");
+            this->set_pret(50);
             break;
         case 2:
-            std::cout << "INCOME TAX REFUND COLLECT $20" << std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(20);
+            std::cout << "PRIMESTI $20 DE LA UN ADMIRATOR SECRET" << std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(20);
             break;
         case 3:
-            std::cout << "CHRISTMAS FUND MATURES COLLECT $100" << std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(100);
+            std::cout << "EYY. AI RETRAS BANII LA TIMP, PRIMESTI $100" << std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(100);
             break;
         case 4:
-            std::cout << "PAY SCHOOL TAX OF $150" << std::endl;
-            alta_carte.setPrimescSauPlatesc("platesc");
-            alta_carte.set_pret(150);
+            std::cout << "TAXA SCOLARA DE $150" << std::endl;
+            this->setPrimescSauPlatesc("platesc");
+            this->set_pret(150);
             break;
         default:
             break;
     }
 }
 
-void Alta_carte::get_card_noroc(Alta_carte &alta_carte) {
+void Alta_carte::aleg_card_noroc() {
     switch(rand()% 6) {
         case 0:
-            std::cout << "PAY POOR TAX OF $15"<<std::endl;
-            alta_carte.setPrimescSauPlatesc("platesc");
-            alta_carte.set_pret(15);
+            std::cout << "TAXA INVENTATA DE VIORICA: $15"<<std::endl;
+            this->setPrimescSauPlatesc("platesc");
+            this->set_pret(15);
             break;
         case 1:
-            std::cout << "BANK PAYS YOU DIVIDENT OF $50"<<std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(50);
+            std::cout << "BANCA TE RASPLATESTE CU $50 PENTRU LOIALITATE"<<std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(50);
         case 2:
-            std::cout << "INCOME TAX REFUND COLLECT $20" << std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(20);
+            std::cout << "RAMBURSAREA IMPOZITULUI. COLECTEAZA $20" << std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(20);
         case 3:
-            std::cout << "GO DIRECTLY TO JAIL. DO NOT PASS GO, DO NOT COLLECT $200" << std::endl;
-            alta_carte.setPrimescSauPlatesc("stau");
-            alta_carte.set_pozitie(0);
+            std::cout << "TE DUCI DIRECT LA PUSCARIE. NU TRECI PE LA GO, NU PRIMESTI $200" << std::endl;
+            this->setPrimescSauPlatesc("stau");
+            this->set_pozitie(30);
         case 4:
-            std::cout << "YOUR BUILDING AND LOAN MATURES" << std::endl;
-            alta_carte.setPrimescSauPlatesc("primesc");
-            alta_carte.set_pret(150);
+            std::cout << "CINEVA TI-A DONAT 150$" << std::endl;
+            this->setPrimescSauPlatesc("primesc");
+            this->set_pret(150);
         case 5:
-            std::cout << "GO BACK 3 SPACES"<< std::endl;
-            alta_carte.setPrimescSauPlatesc("stau");
-            if(alta_carte.get_pozitie() >= 3)
-                alta_carte.set_pozitie(alta_carte.get_pozitie() - 3);
-            else if(alta_carte.get_pozitie() == 0)
-                alta_carte.set_pozitie(37);
-            else if(alta_carte.get_pozitie() == 1)
-                alta_carte.set_pozitie(38);
-            else if(alta_carte.get_pozitie() == 2)
-                alta_carte.set_pozitie(39);
+            std::cout << "DU-TE IN SPATE 3 SPATII"<< std::endl;
+            this->setPrimescSauPlatesc("stau");
+            if(this->get_pozitie() >= 3)
+                this->set_pozitie(this->get_pozitie() - 3);
+            else if(this->get_pozitie() == 0)
+                this->set_pozitie(37);
+            else if(this->get_pozitie() == 1)
+                this->set_pozitie(38);
+            else if(this->get_pozitie() == 2)
+                this->set_pozitie(39);
             break;
         default:
             break;
     }
 }
-void Alta_carte::get_card_gara(Alta_carte &alta_carte) {
-    alta_carte.set_pret(200);
-    alta_carte.setPrimescSauPlatesc("platesc");
-    if(alta_carte.get_pozitie() == 5)
+void Alta_carte::aleg_card_gara() {
+    this->set_pret(200);
+    this->setPrimescSauPlatesc("platesc");
+    if(this->get_pozitie() == 5)
         std::cout << "GARA BANEASA" << std::endl;
-    else if(alta_carte.get_pozitie() == 15)
+    else if(this->get_pozitie() == 15)
         std::cout<<"GARA DE NORD"<< std::endl;
-    else if(alta_carte.get_pozitie() == 25)
+    else if(this->get_pozitie() == 25)
         std::cout<<"GARA SINAIA"<< std::endl;
-    else if(alta_carte.get_pozitie() == 35)
+    else if(this->get_pozitie() == 35)
         std::cout<<"GARA PREDEAL"<< std::endl;
 }
 
-void Alta_carte::get_card_taxa(Alta_carte &alta_carte) {
-    alta_carte.setPrimescSauPlatesc("platesc");
-    if(alta_carte.get_pozitie() == 4) {
-        alta_carte.set_pret(200);
-        std::cout << "INCOME TAX" << std::endl;
+void Alta_carte::aleg_card_taxa() {
+    this->setPrimescSauPlatesc("platesc");
+    if(this->get_pozitie() == 4) {
+        this->set_pret(200);
+        std::cout << "TAXA PE VENIT" << std::endl;
     }
-    else if(alta_carte.get_pozitie() == 12) {
-        alta_carte.set_pret(150);
-        std::cout << "ELECTRIC COMPANY" << std::endl;
+    else if(this->get_pozitie() == 12) {
+        this->set_pret(150);
+        std::cout << "COMPANIA ELECTRICA. PLATESTI 150$ PENTRU INTERVENTIE" << std::endl;
     }
-    else if(alta_carte.get_pozitie() == 28) {
-        alta_carte.set_pret(150);
-        std::cout << "WATER WORKS" << std::endl;
+    else if(this->get_pozitie() == 28) {
+        this->set_pret(150);
+        std::cout << "APA NU E GRATIS. PLATESTI 150$ PENTRU INTERVENTIE." << std::endl;
     }
-    else if(alta_carte.get_pozitie() == 38) {
-        alta_carte.set_pret(100);
-        std::cout << "LUXURY TAX" << std::endl;
+    else if(this->get_pozitie() == 38) {
+        this->set_pret(100);
+        std::cout << "O VIATA LUXOASA NECESITA O TAXA DE 100$" << std::endl;
     }
 }
 

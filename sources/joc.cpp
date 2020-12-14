@@ -14,45 +14,11 @@ void Joc::start() {
     std::ifstream pr("../fisiere/proprietate.txt");
     std::ifstream alt("../fisiere/alte_carti.txt");
     int nr_jucatori;
-    juc >> nr_jucatori;
-    rlutil::setColor(3);
-    std::cout << "--------------START GAME--------------" << std::endl;
-    std::cout << "--------------Detalii joc--------------" << std::endl;
-    std::cout << "--------------Jucatori--------------" << std::endl;
-    std::cout << "Numarul de jucatori este: " << nr_jucatori << "\n";
-
-    for (int i = 0; i < nr_jucatori; ++i) {
-        Jucator jucator_nou(i + 1);
-        juc >> jucator_nou;
-        jucatori.push_back(jucator_nou);
-    }
-
-//    for (int i = 0; i < n; ++i) {
-//        std::cout << jucatori[i];
-//    }
-
     int nr_proprietati;
-    pr >> nr_proprietati;
-
-    for (int i = 0; i < nr_proprietati; ++i) {
-        Proprietate proprietate_noua;
-        pr >> proprietate_noua;
-        proprietati.push_back(proprietate_noua);
-    }
-
     int nr_alte_carti;
-    alt>> nr_alte_carti;
-    for (int i = 0; i < nr_alte_carti; ++i) {
-        Alta_carte alta_carte;
-        alt >> alta_carte;
-        carti.push_back(alta_carte);
-    }
-//    std::cout << "--------------Proprietati Monopoly--------------" << std::endl;
-//    for (int i = 0; i < nr_proprietati; i++) {
-//        std::cout << proprietati[i];
-//    }
+    init(alt, juc, pr, nr_jucatori, nr_proprietati, nr_alte_carti);
 
-// momentan punem nr. de runde ca să se oprească jocul
+    // momentan pun nr. de runde ca să se oprească jocul
     Zar zar;
     Bani_actiune bani_actiune;
     Banca banca;
@@ -107,18 +73,19 @@ void Joc::start() {
                         break;
                     }
                 }
+                std::cout << "Te afli in : "<<std::endl;
                 if(carti[nr_carte].get_nume() == "comunitate")
-                    carti[nr_carte].get_card_comunitate(carti[nr_carte]);
+                    carti[nr_carte].aleg_card_comunitate();
                 else if(carti[nr_carte].get_nume() == "taxa")
-                    carti[nr_carte].get_card_taxa(carti[nr_carte]);
+                    carti[nr_carte].aleg_card_taxa();
                 else if(carti[nr_carte].get_nume() == "gara")
-                    carti[nr_carte].get_card_gara(carti[nr_carte]);
+                    carti[nr_carte].aleg_card_gara();
                 else if(carti[nr_carte].get_nume() == "noroc")
-                    carti[nr_carte].get_card_noroc(carti[nr_carte]);
+                    carti[nr_carte].aleg_card_noroc();
                 else if(carti[nr_carte].get_nume() == "parcare")
-                    std::cout << "FREE PARKING. GRAB A BEER" << std::endl;
+                    std::cout << "PARCARE GRATIS. AI O BERE IN PORTBAGAJ." << std::endl;
                 else if(carti[nr_carte].get_nume() == "inchisoare")
-                    std::cout<< "PRISON" << std::endl;
+                    std::cout<< "INCHISOARE" << std::endl;
 
                 ///Aici verific daca jucatorul trebuie sa primeasca sau sa plateasca bani
                 bani_actiune.alte_carduri_interact(jucator, banca, carti[nr_carte], carti[nr_carte].getPrimescSauPlatesc());
@@ -137,7 +104,41 @@ void Joc::start() {
 //    }
 
     ///Verific cine a castigat
+    find_winner(nr_jucatori, nr_proprietati, banca);
+    juc.close();
+    pr.close();
+}
 
+void Joc::init(std::ifstream &alt, std::ifstream &juc, std::ifstream &pr, int &nr_jucatori, int &nr_proprietati,
+               int &nr_alte_carti) {
+    juc >> nr_jucatori;
+    rlutil::setColor(3);
+    std::cout << "--------------START GAME--------------" << std::endl;
+    std::cout << "--------------Detalii joc--------------" << std::endl;
+    std::cout << "--------------Jucatori--------------" << std::endl;
+    std::cout << "Numarul de jucatori este: " << nr_jucatori << "\n";
+
+    for (int i = 0; i < nr_jucatori; ++i) {
+        Jucator jucator_nou(i + 1);
+        juc >> jucator_nou;
+        jucatori.push_back(jucator_nou);
+    }
+    pr >> nr_proprietati;
+
+    for (int i = 0; i < nr_proprietati; ++i) {
+        Proprietate proprietate_noua;
+        pr >> proprietate_noua;
+        proprietati.push_back(proprietate_noua);
+    }
+    alt >> nr_alte_carti;
+    for (int i = 0; i < nr_alte_carti; ++i) {
+        Alta_carte alta_carte;
+        alt >> alta_carte;
+        carti.push_back(alta_carte);
+    }
+}
+
+void Joc::find_winner(int nr_jucatori, int nr_proprietati, const Banca &banca) {
     int avere_jucator[nr_jucatori];
     for (int i = 0; i < nr_jucatori; ++i) {
         avere_jucator[i] = 0;
@@ -153,20 +154,20 @@ void Joc::start() {
     int max = 0;
     for(int i = 0 ; i < nr_jucatori; i++)
     {
-        if( jucatori[i].get_bani_card() + avere_jucator[i] > max)
+        if(jucatori[i].get_bani_card() + avere_jucator[i] > max)
             max = jucatori[i].get_bani_card() + avere_jucator[i];
     }
     int count_winners = 1;
     for(int i = 0 ; i < nr_jucatori; i++)
     {
-        if( jucatori[i].get_bani_card() + avere_jucator[i] == max) {
+        if(jucatori[i].get_bani_card() + avere_jucator[i] == max) {
             count_winners ++;
         }
     }
     rlutil::setColor(13);
     int first_time = 1;
     for (int i = 0; i < nr_jucatori; ++i) {
-        if( jucatori[i].get_bani_card() + avere_jucator[i] == max && count_winners == 1) {
+        if(jucatori[i].get_bani_card() + avere_jucator[i] == max && count_winners == 1) {
             std::cout << "Castigatorul este: " << jucatori[i].get_nume() << " cu o avere de "
                       << jucatori[i].get_bani_card() + avere_jucator[i] << " $." << std::endl;
         }
@@ -176,13 +177,11 @@ void Joc::start() {
                 std::cout << "Castigatorii cu suma de " << jucatori[i].get_bani_card() + avere_jucator[i] << " $ sunt: "
                           << std::endl;
             }
-            std::cout << jucatori[i].get_nume() <<std::endl;
+            std::cout << jucatori[i].get_nume() << std::endl;
             first_time = 0;
         }
     }
     std::cout << "Banca este adevaratul castigator cu: "<< banca.suma_bani << "$ in cont.";
-    juc.close();
-    pr.close();
 }
 
 Joc::~Joc() = default;

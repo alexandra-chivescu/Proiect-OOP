@@ -5,21 +5,23 @@
 #include "../headers/bani_actiune.h"
 #include "../headers/rlutil.h"
 void Bani_actiune::cumpara_de_la_banca(Jucator& cumparator, Banca& banca,Proprietate& proprietate, std::string choice) {
-    try {
+    int ok = 0;
+    while(ok == 0) {
         if (choice == "da") {
             cumparator.da_bani(proprietate.get_pret());
             banca.primeste_bani(proprietate.get_pret());
             proprietate.set_id(cumparator.get_id());
             proprietate.set_stadiu('i');
+            ok = 1;
+            break;
         } else if (choice == "nu") {
             cumparator.da_bani(proprietate.get_pret_chirie());
             banca.primeste_bani(proprietate.get_pret_chirie());
+            ok = 1;
+            break;
         }
-        else {
-            throw choice;
-        }
-    } catch (std::string bad_choice) {
-        std::cout << "Nu ai introdus un raspuns exact, deci vom continua." <<std::endl;
+        std::cout << "Raspunsul tau nu este valid. Trebuie sa raspunzi da sau nu. "<<std::endl;
+        std::cin >> choice;
     }
 }
 

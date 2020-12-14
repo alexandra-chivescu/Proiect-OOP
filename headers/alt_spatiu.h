@@ -18,10 +18,10 @@ public:
     friend std::istream& operator>>(std::istream&, Alta_carte&);
     friend std::ostream& operator<<(std::ostream&, const Alta_carte&);
 
-    void get_card_comunitate(Alta_carte &alta_carte);
-    void get_card_noroc(Alta_carte &alta_carte);
-    void get_card_gara(Alta_carte &alta_carte);
-    void get_card_taxa(Alta_carte &alta_carte);
+    void aleg_card_comunitate();
+    void aleg_card_noroc();
+    void aleg_card_gara();
+    void aleg_card_taxa();
 
     ~Alta_carte();
 };

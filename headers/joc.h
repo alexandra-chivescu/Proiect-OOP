@@ -20,6 +20,11 @@ public:
     void start();
 
     ~Joc();
+
+    void find_winner(int nr_jucatori, int nr_proprietati, const Banca &banca);
+
+    void init(std::ifstream &alt, std::ifstream &juc, std::ifstream &pr, int &nr_jucatori, int &nr_proprietati,
+              int &nr_alte_carti);
 };
 
 #endif //TEMA_JOC_H
