@@ -30,7 +30,7 @@ public:
     friend std::ostream& operator<<(std::ostream&, Jucator&);
 
     ///op=
-    Jucator& operator=(Jucator& alt_jucator){
+    Jucator& operator=(const Jucator& alt_jucator){
         if(this == &alt_jucator)
             return *this;
         else
@@ -39,6 +39,7 @@ public:
             bani_card = alt_jucator.bani_card;
             id = alt_jucator.id;
             pozitie = alt_jucator.pozitie;
+            return *this;
         }
     };
 

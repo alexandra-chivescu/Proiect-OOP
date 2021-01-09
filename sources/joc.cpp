@@ -22,39 +22,41 @@ void Joc::start() {
     Zar zar;
     Bani_actiune bani_actiune;
     Banca banca;
-    while (nr_runde-- ) {
+    std::vector<int> indici_eliminare;
+    while (nr_runde--) {
         for (auto &jucator : jucatori) {
             //Jucatorul da cu zarul
             try {
                 int bani_pe_card = jucator.get_bani_card();
-                if(bani_pe_card <= 0)
+                if (bani_pe_card <= 0)
                     throw (bani_pe_card);
             } catch (int bani_card) {
-                std::cout << "Trebuie sa ai bani pe card pentru a juca. Esti pe minus cu "<< bani_card<<". Ne pare rau, parasesti jocul";
-                for(int i = 0; i <= jucatori.size(); i++)
-                    if( i == jucator.get_id())
-                        jucatori.erase(jucatori.begin() + i);
+                std::cout << "Trebuie sa ai bani pe card pentru a juca. Esti pe minus cu " << bani_card
+                          << ". Ne pare rau, parasesti jocul";
+                indici_eliminare.push_back(jucator.get_id());
             }
-            int nr_poz_inaintare = zar.da_cu_zarul() ;
+            int nr_poz_inaintare = zar.da_cu_zarul();
             //Jucatorul inainteaza pe o pozitie
             if (jucator.get_pozitie() + nr_poz_inaintare >= 39)
-                jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare - 40); //pentru ca jucatorul poate face mai multe ture de tabla
+                jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare -
+                                    40); //pentru ca jucatorul poate face mai multe ture de tabla
             else
                 jucator.set_pozitie(jucator.get_pozitie() + nr_poz_inaintare);
-            std::cout<<"Jucatorul : "<<jucator.get_nume() << " a avansat la pozitia: " << jucator.get_pozitie()<< std::endl;
+            std::cout << "Jucatorul : " << jucator.get_nume() << " a avansat la pozitia: " << jucator.get_pozitie()
+                      << std::endl;
 
             //Aflu pe pozitia respectiva ce am proprietate sau altceva
             int pozitie = jucator.get_pozitie();
             int exista_pozitia = 0;
             int nr_proprietate;
             for (int i = 0; i < nr_proprietati; ++i) {
-                if(proprietati[i].get_pozitie() == pozitie) {
+                if (proprietati[i].get_pozitie() == pozitie) {
                     exista_pozitia = 1;
                     nr_proprietate = i;
                     break;
                 }
             }
-            if(exista_pozitia == 1) {
+            if (exista_pozitia == 1) {
                 ///Proprietatea apartine bancii
                 int id_proprietate = proprietati[nr_proprietate].get_id();
                 if (id_proprietate == 0) {
@@ -78,31 +80,38 @@ void Joc::start() {
             } else {
                 int nr_carte = 0;
                 for (int i = 0; i < nr_alte_carti; ++i) {
-                    if(carti[i].get_pozitie() == pozitie) {
+                    if (carti[i].get_pozitie() == pozitie) {
                         nr_carte = i;
                         break;
                     }
                 }
-                std::cout << "Te afli in : "<<std::endl;
-                if(carti[nr_carte].get_nume() == "comunitate")
+                std::cout << "Te afli in : " << std::endl;
+                if (carti[nr_carte].get_nume() == "comunitate")
                     carti[nr_carte].aleg_card_comunitate();
-                else if(carti[nr_carte].get_nume() == "taxa")
+                else if (carti[nr_carte].get_nume() == "taxa")
                     carti[nr_carte].aleg_card_taxa();
-                else if(carti[nr_carte].get_nume() == "gara")
+                else if (carti[nr_carte].get_nume() == "gara")
                     carti[nr_carte].aleg_card_gara();
-                else if(carti[nr_carte].get_nume() == "noroc")
+                else if (carti[nr_carte].get_nume() == "noroc")
                     carti[nr_carte].aleg_card_noroc();
-                else if(carti[nr_carte].get_nume() == "parcare")
+                else if (carti[nr_carte].get_nume() == "parcare")
                     std::cout << "PARCARE GRATIS. AI O BERE IN PORTBAGAJ." << std::endl;
-                else if(carti[nr_carte].get_nume() == "inchisoare")
-                    std::cout<< "INCHISOARE" << std::endl;
+                else if (carti[nr_carte].get_nume() == "inchisoare")
+                    std::cout << "INCHISOARE" << std::endl;
 
                 ///Aici verific daca jucatorul trebuie sa primeasca sau sa plateasca bani
-                bani_actiune.alte_carduri_interact(jucator, banca, carti[nr_carte], carti[nr_carte].getPrimescSauPlatesc());
+                bani_actiune.alte_carduri_interact(jucator, banca, carti[nr_carte],
+                                                   carti[nr_carte].getPrimescSauPlatesc());
                 rlutil::setColor(3);
             }
         }
-   }
+        if (indici_eliminare.size() > 0) {
+            for (int i = 0; i < indici_eliminare.size(); i++) {
+                if(jucatori[i].get_id() == indici_eliminare[i])
+                    jucatori.erase(jucatori.begin() + i);
+            }
+        }
+    }
 
 ///    std::cout<<"Situatia finala a proprietatilor de pe tabla: "<<std::endl;
 //    for(int i = 0 ; i < nr_proprietati; i++)
@@ -117,12 +126,13 @@ void Joc::start() {
     find_winner(nr_jucatori, nr_proprietati, banca);
 
     ///Verificare functie virtuala
-    std::cout << "\n---------Fct virtuala----------";
+    std::cout << "\n---------Fct virtuala----------\n";
     test_virtual();
 
     juc.close();
     pr.close();
 }
+
 
 void Joc::init(std::ifstream &alt, std::ifstream &juc, std::ifstream &pr, int &nr_jucatori, int &nr_proprietati,
                int &nr_alte_carti) {
@@ -160,35 +170,31 @@ void Joc::find_winner(int nr_jucatori, int nr_proprietati, const Banca &banca) {
     }
     for (int i = 0; i < nr_proprietati; ++i) {
         for (int j = 0; j < nr_jucatori; ++j) {
-            if(proprietati[i].get_id() == jucatori[j].get_id()) {
+            if (proprietati[i].get_id() == jucatori[j].get_id()) {
                 avere_jucator[j] = avere_jucator[j] + proprietati[i].get_pret();
                 break;
             }
         }
     }
     int max = 0;
-    for(int i = 0 ; i < nr_jucatori; i++)
-    {
-        if(jucatori[i].get_bani_card() + avere_jucator[i] > max)
+    for (int i = 0; i < nr_jucatori; i++) {
+        if (jucatori[i].get_bani_card() + avere_jucator[i] > max)
             max = jucatori[i].get_bani_card() + avere_jucator[i];
     }
     int count_winners = 1;
-    for(int i = 0 ; i < nr_jucatori; i++)
-    {
-        if(jucatori[i].get_bani_card() + avere_jucator[i] == max) {
-            count_winners ++;
+    for (int i = 0; i < nr_jucatori; i++) {
+        if (jucatori[i].get_bani_card() + avere_jucator[i] == max) {
+            count_winners++;
         }
     }
     rlutil::setColor(13);
     int first_time = 1;
-    for (int i = 0; i < nr_jucatori; ++i) {
-        if(jucatori[i].get_bani_card() + avere_jucator[i] == max && count_winners == 1) {
+    for (int i = 0; i < jucatori.size(); ++i) {
+        if (jucatori[i].get_bani_card() + avere_jucator[i] == max && count_winners == 1 && jucatori[i].get_bani_card()> 0) {
             std::cout << "Castigatorul este: " << jucatori[i].get_nume() << " cu o avere de "
                       << jucatori[i].get_bani_card() + avere_jucator[i] << " $." << std::endl;
-        }
-        else
-        {
-            if(first_time == 1) {
+        } else {
+            if (first_time == 1 && jucatori[i].get_bani_card()> 0 ) {
                 std::cout << "Castigatorii cu suma de " << jucatori[i].get_bani_card() + avere_jucator[i] << " $ sunt: "
                           << std::endl;
             }
@@ -196,7 +202,7 @@ void Joc::find_winner(int nr_jucatori, int nr_proprietati, const Banca &banca) {
             first_time = 0;
         }
     }
-    std::cout << "Banca este adevaratul castigator cu: "<< banca.suma_bani << "$ in cont.";
+    std::cout << "Banca este adevaratul castigator cu: " << banca.suma_bani << "$ in cont.";
 }
 
 void Joc::test_virtual() {
