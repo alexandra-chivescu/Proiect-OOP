@@ -25,6 +25,16 @@ void Joc::start() {
     while (nr_runde-- ) {
         for (auto &jucator : jucatori) {
             //Jucatorul da cu zarul
+            try {
+                int bani_pe_card = jucator.get_bani_card();
+                if(bani_pe_card <= 0)
+                    throw (bani_pe_card);
+            } catch (int bani_card) {
+                std::cout << "Trebuie sa ai bani pe card pentru a juca. Esti pe minus cu "<< bani_card<<". Ne pare rau, parasesti jocul";
+                for(int i = 0; i <= jucatori.size(); i++)
+                    if( i == jucator.get_id())
+                        jucatori.erase(jucatori.begin() + i);
+            }
             int nr_poz_inaintare = zar.da_cu_zarul() ;
             //Jucatorul inainteaza pe o pozitie
             if (jucator.get_pozitie() + nr_poz_inaintare >= 39)
@@ -105,6 +115,11 @@ void Joc::start() {
 
     ///Verific cine a castigat
     find_winner(nr_jucatori, nr_proprietati, banca);
+
+    ///Verificare functie virtuala
+    std::cout << "\n---------Fct virtuala----------";
+    test_virtual();
+
     juc.close();
     pr.close();
 }
@@ -182,6 +197,13 @@ void Joc::find_winner(int nr_jucatori, int nr_proprietati, const Banca &banca) {
         }
     }
     std::cout << "Banca este adevaratul castigator cu: "<< banca.suma_bani << "$ in cont.";
+}
+
+void Joc::test_virtual() {
+    Alta_carte *altaCarte = new Alta_carte();
+    Spatiu_joc *sp = altaCarte;
+    std::cout << altaCarte->MesajTest();
+    std::cout << sp->MesajTest();
 }
 
 Joc::~Joc() = default;

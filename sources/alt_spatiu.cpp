@@ -119,6 +119,11 @@ void Alta_carte::aleg_card_taxa() {
     }
 }
 
+std::string Alta_carte::MesajTest() {
+    return "Felicitari ai ajuns pana aici-deriv!";
+}
+
+
 Alta_carte::~Alta_carte() {
 }
 

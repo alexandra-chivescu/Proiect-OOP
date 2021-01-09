@@ -17,6 +17,8 @@ class Joc {
     std::vector<Alta_carte> carti;
     int nr_runde = 3;
 public:
+    void test_virtual();
+
     void start();
 
     ~Joc();

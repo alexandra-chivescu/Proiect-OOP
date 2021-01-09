@@ -36,6 +36,10 @@ void Spatiu_joc::set_id(int id) {
     this->id = id;
 }
 
+std::string Spatiu_joc::MesajTest() {
+        return "Felicitari ai ajuns pana aici-baza!";
+}
+
 
 Spatiu_joc::~Spatiu_joc() {
 }

@@ -26,6 +26,8 @@ public:
     void set_pret(int);
     void set_id(int);
 
+    virtual std::string MesajTest();
+
     ~Spatiu_joc();
 };
 #endif //TEMA_CARTE_JOC_H

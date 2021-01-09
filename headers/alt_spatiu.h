@@ -23,6 +23,8 @@ public:
     void aleg_card_gara();
     void aleg_card_taxa();
 
+    std::string MesajTest();
+
     ~Alta_carte();
 };
 #endif //TEMA_ALT_SPATIU_H
