@@ -18,10 +18,8 @@ public:
     friend std::istream& operator>>(std::istream&, Alta_carte&);
     friend std::ostream& operator<<(std::ostream&, const Alta_carte&);
 
-    void aleg_card_comunitate();
-    void aleg_card_noroc();
-    void aleg_card_gara();
-    void aleg_card_taxa();
+    void aleg_card();
+
 
     std::string MesajTest();
 

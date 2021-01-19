@@ -86,18 +86,7 @@ void Joc::start() {
                     }
                 }
                 std::cout << "Te afli in : " << std::endl;
-                if (carti[nr_carte].get_nume() == "comunitate")
-                    carti[nr_carte].aleg_card_comunitate();
-                else if (carti[nr_carte].get_nume() == "taxa")
-                    carti[nr_carte].aleg_card_taxa();
-                else if (carti[nr_carte].get_nume() == "gara")
-                    carti[nr_carte].aleg_card_gara();
-                else if (carti[nr_carte].get_nume() == "noroc")
-                    carti[nr_carte].aleg_card_noroc();
-                else if (carti[nr_carte].get_nume() == "parcare")
-                    std::cout << "PARCARE GRATIS. AI O BERE IN PORTBAGAJ." << std::endl;
-                else if (carti[nr_carte].get_nume() == "inchisoare")
-                    std::cout << "INCHISOARE" << std::endl;
+                carti[nr_carte].aleg_card();
 
                 ///Aici verific daca jucatorul trebuie sa primeasca sau sa plateasca bani
                 bani_actiune.alte_carduri_interact(jucator, banca, carti[nr_carte],

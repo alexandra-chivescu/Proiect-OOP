@@ -40,6 +40,10 @@ std::string Spatiu_joc::MesajTest() {
         return "Felicitari ai ajuns pana aici-baza!";
 }
 
+void Spatiu_joc::aleg_card() {
+    std::cout << "Ai ales un card.";
+}
+
 
 Spatiu_joc::~Spatiu_joc() {
 }

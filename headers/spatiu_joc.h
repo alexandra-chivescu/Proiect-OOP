@@ -27,6 +27,7 @@ public:
     void set_id(int);
 
     virtual std::string MesajTest();
+    virtual void aleg_card();
 
     ~Spatiu_joc();
 };
