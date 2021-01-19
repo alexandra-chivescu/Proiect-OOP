@@ -18,6 +18,19 @@ void Joc::start() {
     int nr_alte_carti;
     init(alt, juc, pr, nr_jucatori, nr_proprietati, nr_alte_carti);
 
+    std::cout << "Vrei sa te joci cu boti? DA/NU";
+    std::string raspuns;
+    std::cin>> raspuns;
+    if(raspuns == "DA") {
+        Jucator bot1 = Jucator_factory::bot();
+        nr_jucatori ++;
+        Jucator bot_nou(nr_jucatori);
+        bot_nou.set_bani_card(bot1.get_bani_card());
+        bot_nou.set_nume(bot1.get_nume());
+        bot_nou.set_pozitie(0);
+        jucatori.push_back(bot_nou);
+    }
+
     // momentan pun nr. de runde ca să se oprească jocul
     Zar zar;
     Bani_actiune bani_actiune;
@@ -45,7 +58,7 @@ void Joc::start() {
             std::cout << "Jucatorul : " << jucator.get_nume() << " a avansat la pozitia: " << jucator.get_pozitie()
                       << std::endl;
 
-            //Aflu pe pozitia respectiva ce am proprietate sau altceva
+            //Aflu pe pozitia respectiva ce am: proprietate sau altceva
             int pozitie = jucator.get_pozitie();
             int exista_pozitia = 0;
             int nr_proprietate;
@@ -61,10 +74,15 @@ void Joc::start() {
                 int id_proprietate = proprietati[nr_proprietate].get_id();
                 if (id_proprietate == 0) {
                     std::cout << "Proprietatea apartine bancii." << std::endl;
-                    std::cout << "Vrei sa o cumperi? da/nu ";
-                    std::string choice;
-                    std::cin >> choice;
-                    bani_actiune.cumpara_de_la_banca(jucator, banca, proprietati[jucator.get_pozitie()], choice);
+                    if(jucator.get_nume() == "Bot") {
+                        std::cout <<"Bot a cumparat: " << proprietati[jucator.get_pozitie()].get_nume()<<"\n";
+                        bani_actiune.cumpara_de_la_banca(jucator, banca, proprietati[jucator.get_pozitie()], "da");
+                    } else { ///jucator care nu e bot
+                        std::cout << "Vrei sa o cumperi? da/nu ";
+                        std::string choice;
+                        std::cin >> choice;
+                        bani_actiune.cumpara_de_la_banca(jucator, banca, proprietati[jucator.get_pozitie()], choice);
+                    }
                 } else { ///Proprietatea apartine unui jucator
                     int i;
                     for (i = 0; i < nr_jucatori; ++i) {

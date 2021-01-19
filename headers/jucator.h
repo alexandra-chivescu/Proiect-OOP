@@ -14,6 +14,8 @@ protected:
     int bani_card;
     int id, pozitie;
 public:
+    Jucator(const std::string &nume, int baniCard, int pozitie);
+
     Jucator(int);
 
     std::string get_nume();
@@ -56,6 +58,12 @@ public:
 
     ~Jucator();
 
+};
+
+class Jucator_factory {
+public:
+    static Jucator bot() { return Jucator("Bot", 1000, 0); }
+    static Jucator bot2() { return Jucator("Bot2", 1000, 0); }
 };
 
 #endif //TEMA_JUCATOR_H

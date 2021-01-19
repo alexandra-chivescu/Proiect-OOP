@@ -56,3 +56,6 @@ Jucator::~Jucator() {
     //std::cout<<"Jucatorul "<< nume << " a iesit din joc. " << std::endl;
 }
 
+Jucator::Jucator(const std::string &nume, int baniCard, int pozitie) : nume(nume), bani_card(baniCard),
+                                                                               pozitie(pozitie) {}
+
